@@ -8,17 +8,20 @@ namespace PocketZone.Space
     {
         [SerializeField] private InputReader inputReader;
         [SerializeField] private Transform aimSpotParent;
+        [SerializeField] private Transform aimSpot;
         [SerializeField] private Transform modelTransform;
         [SerializeField] private float aimLerprate = 20f;
+        [SerializeField] private bool aimAlongDirection = true;
 
         private Vector2 aimDirection;
-        private Vector3 microAdjustment;
-        private float angle;
         private bool lookLeft;
+        public Vector2 test;
+        private float distance;
 
         private void Start()
         {
             inputReader.MovementEvent += HandleMovement;
+            distance = Vector2.Distance(aimSpot.position, aimSpotParent.position);
         }
 
         private void OnDestroy()
@@ -34,12 +37,13 @@ namespace PocketZone.Space
 
         private void HandleFaceFlip()
         {
-            if (aimSpotParent.right.x < 0 && !lookLeft)
+            float _delta = aimSpot.position.x - aimSpotParent.position.x;
+            if (_delta < 0 && !lookLeft)
             {
                 modelTransform.Rotate(0f, 180f, 0f);
                 lookLeft = true;
             }
-            else if(aimSpotParent.right.x >= 0 && lookLeft)
+            else if(_delta >= 0 && lookLeft)
             {
                 modelTransform.Rotate(0f, 180f, 0f);
                 lookLeft = false;
@@ -48,16 +52,26 @@ namespace PocketZone.Space
 
         private void SetAimSpotParentRotation(float deltaTime)
         {
-            angle = Vector2.Angle(aimSpotParent.right, aimDirection);
-            if (angle <= 180f && angle > 178f)
+            if(aimAlongDirection)
             {
-                microAdjustment = new Vector2(0.01f, 0.01f);
+                Vector2 newPosition = (Vector2)aimSpotParent.position
+                + ((aimDirection == Vector2.zero) ? (Vector2)aimSpotParent.right : aimDirection)
+                * distance;
+                aimSpot.position = Vector2.Lerp(aimSpot.position, newPosition, deltaTime * aimLerprate);
             }
-            else
-            {
-                microAdjustment = Vector2.zero;
-            }
-            aimSpotParent.right = Vector2.Lerp(aimSpotParent.right + microAdjustment, aimDirection, aimLerprate * deltaTime);
+            
+            //aimSpot.RotateAround(aimSpotParent.position + microAdjustment, aimSpotParent.right, angle);
+            //return;
+            //angle = Vector2.Angle(aimSpotParent.right, aimDirection);
+            //if (angle <= 180f && angle > 178f)
+            //{
+            //    microAdjustment = new Vector2(0.01f, 0.01f);
+            //}
+            //else
+            //{
+            //    microAdjustment = Vector2.zero;
+            //}
+            //aimSpotParent.right = Vector2.Lerp(aimSpotParent.right + microAdjustment, aimDirection, aimLerprate * deltaTime);
         }
 
         private void HandleMovement(Vector2 moveDirection)

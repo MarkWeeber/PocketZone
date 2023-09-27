@@ -9,6 +9,7 @@ namespace PocketZone.Space
     {
         [SerializeField] private InputReader inputReader;
         [SerializeField] private float movementSpeed = 100f;
+        [SerializeField] private Animator animator;
 
         private Rigidbody2D rbody2D;
         private Vector2 movementInput;
@@ -27,6 +28,16 @@ namespace PocketZone.Space
         private void FixedUpdate()
         {
             ManageMovement(Time.fixedDeltaTime);
+        }
+
+        private void Update()
+        {
+            ManageAnimatorParameters();
+        }
+
+        private void ManageAnimatorParameters()
+        {
+            animator.SetFloat("MoveSpeed", animator.GetFloat("AnimationSpeedMultiplier") * rbody2D.velocity.magnitude);
         }
 
         private void ManageMovement(float fixedDeltaTime)
