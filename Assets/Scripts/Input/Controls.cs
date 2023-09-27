@@ -29,7 +29,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Movement"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""75b05138-40f9-4542-840a-accb9d12b180"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
@@ -123,7 +123,7 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""2D Vector"",
                     ""id"": ""3773c6ae-c557-45aa-b252-ff23001849fc"",
-                    ""path"": ""2DVector"",
+                    ""path"": ""2DVector(mode=2)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
