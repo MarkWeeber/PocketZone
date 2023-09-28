@@ -13,9 +13,11 @@ namespace PocketZone.Space
         [SerializeField] private Transform inventoryContainer;
         [SerializeField] private InputReader inputReader;
         private List<InventoryItemStack> inventoryStacks;
+
         private void Start()
         {
             inventoryStacks = new List<InventoryItemStack>();
+            
             for (int i = 0; i < maxSlots; i++)
             {
                 InventoryItemStack stack = new InventoryItemStack();
@@ -49,6 +51,17 @@ namespace PocketZone.Space
         private void ToggleShowInventoryPanel()
         {
             inventoryPanel.gameObject.SetActive(!inventoryPanel.gameObject.activeSelf);
+            if (inventoryPanel.gameObject.activeSelf)
+            {
+                LevelUIManager.Instance.StackUI.Push(inventoryPanel.gameObject);
+            }
+            else
+            {
+                if (LevelUIManager.Instance.StackUI.Peek() == inventoryPanel.gameObject)
+                {
+                    LevelUIManager.Instance.StackUI.Pop();
+                }
+            }
         }
 
         private void ClearAllItemsInInventoryUI()
@@ -57,6 +70,15 @@ namespace PocketZone.Space
             foreach (var _item in _items)
             {
                 Destroy(_item.gameObject);
+            }
+        }
+
+        public void TryRemoveItemsStack(InventoryItem inventoryItem)
+        {
+            InventoryItemStack _stack = inventoryStacks.First(x => x.InventoryItem == inventoryItem);
+            if (_stack != null)
+            {
+                _stack.DropStack();
             }
         }
 

@@ -17,5 +17,10 @@ namespace PocketZone.Space
         {
             Action?.Invoke();
         }
+
+        public void DropInventoryItem()
+        {
+            LevelUIManager.Instance.InventoryUI.TryRemoveItemsStack(this);
+        }
     }
 }
