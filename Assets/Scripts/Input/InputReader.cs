@@ -11,10 +11,12 @@ public class InputReader : ScriptableObject, IPlayerActions
 {
     public event Action<Vector2> MovementEvent;
     public event Action<bool> FireEvent;
-    public event Action<bool> InventoryOpenEvent;
-    public event Action<bool> EscapeEvent;
+    public event Action InventoryOpenEvent;
+    public event Action EscapeEvent;
 
     private Controls controls;
+    private bool inventoryOpen;
+    private bool escapePress;
 
     private void OnEnable()
     {
@@ -47,11 +49,18 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         if (context.performed)
         {
-            InventoryOpenEvent?.Invoke(true);
+            if(!inventoryOpen)
+            {
+                InventoryOpenEvent?.Invoke();
+                inventoryOpen = true;
+            }
         }
         else if (context.canceled)
         {
-            InventoryOpenEvent?.Invoke(false);
+            if(inventoryOpen)
+            {
+                inventoryOpen = false;
+            }
         }
     }
 
@@ -59,11 +68,19 @@ public class InputReader : ScriptableObject, IPlayerActions
     {
         if (context.performed)
         {
-            EscapeEvent?.Invoke(true);
+            if (!escapePress)
+            {
+                EscapeEvent?.Invoke();
+                escapePress = false;
+            }
+            
         }
         else if (context.canceled)
         {
-            EscapeEvent?.Invoke(false);
+            if (escapePress)
+            {
+                escapePress = false;
+            };
         }
     }
 }
