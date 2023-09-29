@@ -7,7 +7,7 @@ namespace PocketZone.Space
 {
     public class InventoryUI : MonoBehaviour
     {
-        [SerializeField] private int maxSlots = 9;
+        private const int maxSlots = 9;
         [SerializeField] private GameObject inventoryPrefab;
         [SerializeField] private Transform inventoryPanel;
         [SerializeField] private Transform inventoryContainer;
@@ -98,6 +98,21 @@ namespace PocketZone.Space
                 }
             }
             RefreshItemsStack();
+        }
+
+        public bool TryConsumeInventoryItem(CollectibleType collectibleType, int consumeAmount)
+        {
+            bool _result = false;
+            for (int i = inventoryStacks.Count - 1; i >= 0; i--)
+            {
+                _result = inventoryStacks[i].TryConsumeAmount(collectibleType, consumeAmount);
+                if(_result)
+                {
+                    break;
+                }
+            }
+            RefreshItemsStack();
+            return _result;
         }
 
         private void RefreshItemsStack()

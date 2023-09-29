@@ -17,6 +17,7 @@ namespace PocketZone.Space
         public CollectibleType Type => CollectibleType.Junk;
         public void Collect()
         {
+            InfoUI.Instance.SendInformation(InfoUI.JUNK_PICKED, MessageType.NOTE);
             Destroy(gameObject);
         }
     }

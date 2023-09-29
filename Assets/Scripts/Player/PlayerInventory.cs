@@ -7,11 +7,11 @@ namespace PocketZone.Space
     public class PlayerInventory : MonoBehaviour
     {
         [SerializeField] private LayerMask targetMask;
-        private InventoryUI inventoryUI;
+        public InventoryUI InventoryUI { get; private set; }
 
         private void Start()
         {
-            inventoryUI = LevelUIManager.Instance.InventoryUI;
+            InventoryUI = LevelUIManager.Instance.InventoryUI;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -20,7 +20,7 @@ namespace PocketZone.Space
             {
                 if (collision.TryGetComponent<ICollectible>(out ICollectible collectible))
                 {
-                    inventoryUI.TryAddInventoryItem(collectible);
+                    InventoryUI.TryAddInventoryItem(collectible);
                 }
             }
         }

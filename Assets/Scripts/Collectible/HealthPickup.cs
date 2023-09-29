@@ -15,6 +15,7 @@ namespace PocketZone.Space
         public CollectibleType Type => CollectibleType.Health;
         public void Collect()
         {
+            InfoUI.Instance.SendInformation(InfoUI.HEALTH_PICKED, MessageType.NOTE);
             Destroy(gameObject);
         }
     }

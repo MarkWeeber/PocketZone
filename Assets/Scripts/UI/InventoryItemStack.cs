@@ -24,6 +24,20 @@ namespace PocketZone.Space
         public void DropStack()
         {
             StackDepleted?.Invoke(this);
+            switch (type)
+            {
+                case CollectibleType.Ammo:
+                    InfoUI.Instance.SendInformation(InfoUI.AMMO_DROPPED, MessageType.WARNING);
+                    break;
+                case CollectibleType.Health:
+                    InfoUI.Instance.SendInformation(InfoUI.HEALTH_DROPPED, MessageType.WARNING);
+                    break;
+                case CollectibleType.Junk:
+                    InfoUI.Instance.SendInformation(InfoUI.JUNK_DROPPED, MessageType.WARNING);
+                    break;
+                default:
+                    break;
+            }
             InventoryItem = null;
             type = default(CollectibleType);
             currentStack = 0;
@@ -60,6 +74,35 @@ namespace PocketZone.Space
                     collectible.Quantity = 0;
                     return true;
                 }
+            }
+        }
+
+        public bool TryConsumeAmount(CollectibleType collectibleType, int consumeAmount)
+        {
+            if (type == default(CollectibleType))
+            {
+                return false;
+            }
+            if (type == collectibleType)
+            {
+                currentStack -= consumeAmount;
+                if (currentStack <= 0)
+                {
+                    DropStack();
+                }
+                switch (type)
+                {
+                    case CollectibleType.Health:
+                        InfoUI.Instance.SendInformation(InfoUI.HEALTH_CONSUMED, MessageType.SUCCESS);
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
