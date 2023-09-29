@@ -10,6 +10,7 @@ namespace PocketZone.Space
 {
     public class InfoUI : MonoBehaviour
     {
+        public const string CANNOT_ADD_TO_INVENTORY = "Инвентарь заполнен";
         public const string AMMO_PICKED = "Патроны подобраны";
         public const string AMMO_DROPPED = "Патроны выброшены";
         public const string HEALTH_PICKED = "Аптечка подобрана";

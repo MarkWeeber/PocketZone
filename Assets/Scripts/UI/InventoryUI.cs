@@ -84,10 +84,11 @@ namespace PocketZone.Space
 
         public void TryAddInventoryItem(ICollectible collectible)
         {
+            bool _addResult = false;
             foreach (InventoryItemStack _stack in inventoryStacks)
             {
-                bool _result = _stack.TryAddToStack(collectible);
-                if (_result)
+                _addResult = _stack.TryAddToStack(collectible);
+                if (_addResult)
                 {
                     collectible.Collect();
                     break;
@@ -96,6 +97,10 @@ namespace PocketZone.Space
                 {
                     continue;
                 }
+            }
+            if (!_addResult)
+            {
+                InfoUI.Instance.SendInformation(InfoUI.CANNOT_ADD_TO_INVENTORY, MessageType.WARNING);
             }
             RefreshItemsStack();
         }

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3996956046261432446}
   - component: {fileID: 117366348268099417}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ MonoBehaviour:
   damageRadius: 0.5
   targetTag: Player
   damageDealPoint: {fileID: 8084724896542257547}
-  drawGizmo: 1
+  drawGizmo: 0
 --- !u!1 &593452271580705061
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 465610360202133626}
   - component: {fileID: 3543215215941744174}
   - component: {fileID: 7153806936078562627}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -291,7 +291,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3473455941420532547}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -327,7 +327,7 @@ GameObject:
   - component: {fileID: 4648338365414435231}
   - component: {fileID: 6893125483049443568}
   - component: {fileID: 5814434201493576321}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: HeathBarCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,7 +428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7525899461461863536}
   - component: {fileID: 8158068144729792625}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -511,7 +511,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4621195351204430035}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -545,7 +545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1052089832967350188}
   - component: {fileID: 5211011484988185338}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ArmRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -632,7 +632,7 @@ GameObject:
   - component: {fileID: 3033432309691640542}
   - component: {fileID: 404012945890925683}
   - component: {fileID: 3064834786454346010}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Zombie
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -655,6 +655,7 @@ Transform:
   - {fileID: 2751243482813539093}
   - {fileID: 7954136630092742100}
   - {fileID: 8084724896542257547}
+  - {fileID: 966600195455009021}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -730,7 +731,7 @@ MonoBehaviour:
   animator: {fileID: 5023490016097530527}
   health: {fileID: 404012945890925683}
   modelTransform: {fileID: 6894987026492403496}
-  moveSpeed: 80
+  moveSpeed: 50
   damageValue: 20
   reachDistance: 1
 --- !u!1 &5514607760515687499
@@ -742,7 +743,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1847546550875444275}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -766,6 +767,61 @@ Transform:
   m_Father: {fileID: 3996956046261432446}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5622223354495704063
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 966600195455009021}
+  - component: {fileID: 5832057347647336423}
+  m_Layer: 7
+  m_Name: DropItems
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &966600195455009021
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622223354495704063}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.75, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5140598425963808184}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5832057347647336423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5622223354495704063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1af5a5a5ee6c0cc4e96eb62f5ecab32c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 404012945890925683}
+  dropRadius: 0.5
+  lootPrefab1: {fileID: 2299189345867675257, guid: 0e36b38a2235b0f40beb98b6922c5720, type: 3}
+  minDrop1: 1
+  maxDrop1: 5
+  lootPrefab2: {fileID: 4173278491775225026, guid: 0d2d2b6eccbb47d46a1a1cd9019c77c4, type: 3}
+  minDrop2: 1
+  maxDrop2: 5
+  lootPrefab3: {fileID: 2065933281395251473, guid: 709fc18d393dddf44b9a53478388a82d, type: 3}
+  minDrop3: 1
+  maxDrop3: 5
 --- !u!1 &5870034872975738779
 GameObject:
   m_ObjectHideFlags: 0
@@ -777,7 +833,7 @@ GameObject:
   - component: {fileID: 7362433919787443471}
   - component: {fileID: 200645555182582476}
   - component: {fileID: 4661302146794626911}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: HealtFill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -853,7 +909,7 @@ GameObject:
   - component: {fileID: 6894987026492403496}
   - component: {fileID: 5023490016097530527}
   - component: {fileID: 5323481926475574770}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -934,7 +990,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3352786756125986535}
   - component: {fileID: 4035487036106446245}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LegRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1018,7 +1074,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1641248803194330316}
   - component: {fileID: 215514187161159914}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: LegLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1103,7 +1159,7 @@ GameObject:
   - component: {fileID: 518283026657486708}
   - component: {fileID: 2486233564578903502}
   - component: {fileID: 1198421320378254256}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1178,7 +1234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5031321868146191704}
   - component: {fileID: 3938153121404510280}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ArmLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
