@@ -10,6 +10,8 @@ namespace PocketZone.Space
 {
     public class InfoUI : MonoBehaviour
     {
+        public const string LOAD_SUCCESS_NEW = "Сохранения не обнаружены, создан новый профиль прогресса";
+        public const string LOAD_SUCCESS_PERSISTS = "Сохранения загружены";
         public const string CANNOT_ADD_TO_INVENTORY = "Инвентарь заполнен";
         public const string AMMO_PICKED = "Патроны подобраны";
         public const string AMMO_DROPPED = "Патроны выброшены";
@@ -43,7 +45,6 @@ namespace PocketZone.Space
         private void Awake()
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
             textList = informationContainer.GetComponentsInChildren<TMP_Text>().ToList();
             count = textList.Count;
             if (showConsoleMessages)
