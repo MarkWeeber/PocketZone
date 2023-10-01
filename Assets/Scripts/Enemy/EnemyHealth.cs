@@ -9,6 +9,7 @@ namespace PocketZone.Space
     {
         private Collider2D col;
         public event Action OnTakeDamage;
+        public event Action<EnemyHealth> OnEnemyDeath;
         protected override void Awake()
         {
             base.Awake();
@@ -17,6 +18,7 @@ namespace PocketZone.Space
         protected override void Die()
         {
             col.enabled = false;
+            OnEnemyDeath?.Invoke(this);
             base.Die();
         }
 

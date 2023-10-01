@@ -18,10 +18,12 @@ namespace PocketZone.Space
         [SerializeField] private float moveSpeed = 80f;
         [SerializeField] private float damageValue = 20f;
         [SerializeField] private float reachDistance = 1f;
+        [SerializeField] private float attackDuration = 1f;
 
         private Transform targetTransform;
         private Vector2 directionToTarget;
         private float distanceToTarget;
+        private float attackTimer;
         private float meleeDamagerOffsetDistance;
         private bool targetFound;
         private bool lookLeft;
@@ -50,6 +52,10 @@ namespace PocketZone.Space
             }
             HandleFaceFlip();
             HandleMeleeDamagerPlaceTowardsToTarget();
+            if (attackTimer >= 0)
+            {
+                attackTimer -= Time.deltaTime;
+            }
         }
 
         private void FixedUpdate()
@@ -92,8 +98,9 @@ namespace PocketZone.Space
                 rbody2D.velocity = Vector2.zero;
                 animator.SetBool("Attacking", true);
                 animator.SetFloat("MoveSpeed", 0);
+                attackTimer = attackDuration;
             }
-            else
+            else if (attackTimer < 0f)
             {
                 rbody2D.velocity = directionToTarget.normalized * moveSpeed * Time.fixedDeltaTime;
                 animator.SetBool("Attacking", false);

@@ -14,19 +14,19 @@ namespace PocketZone.Space
 
         private Rigidbody2D rbody2D;
         private Vector2 movementInput;
-        private bool isAlive = true;
+        private bool isActive = true;
 
         private void Start()
         {
             rbody2D = GetComponent<Rigidbody2D>();
             inputReader.MovementEvent += HandleMovement;
-            health.OnDeath += OnDeath;
+            GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
         }
 
         private void OnDestroy()
         {
             inputReader.MovementEvent -= HandleMovement;
-            health.OnDeath -= OnDeath;
+            GameManager.Instance.OnGameStateChanged -= HandleGameStateChanged;
         }
 
         private void FixedUpdate()
@@ -39,14 +39,9 @@ namespace PocketZone.Space
             ManageAnimatorParameters();
         }
 
-        private void OnDeath()
-        {
-            isAlive = false;
-        }
-
         private void ManageAnimatorParameters()
         {
-            if (!isAlive)
+            if (!isActive)
             {
                 return;
             }
@@ -55,7 +50,7 @@ namespace PocketZone.Space
 
         private void ManageMovement(float fixedDeltaTime)
         {
-            if(!isAlive)
+            if (!isActive)
             {
                 return;
             }
@@ -66,5 +61,15 @@ namespace PocketZone.Space
         {
             movementInput = movement;
         }
+
+        private void HandleGameStateChanged(GameState state)
+        {
+            if (state == GameState.LevelComplete || state == GameState.PlayerDeadInGame)
+            {
+                rbody2D.velocity = Vector2.zero;
+                isActive = false;
+            }
+        }
+
     }
 }

@@ -29,5 +29,19 @@ namespace PocketZone.Space
         {
             this.levels = progressData.levels;
         }
+
+        public override string ToString()
+        {
+            string result = "";
+            result += "{" + "@";
+            result += "levels:@";
+            for (int i = 0; i < levels.Length; i++)
+            {
+                result += $"{i} : {levels[i].ToString()}@";
+            }
+            result += "}";
+            result = result.Replace("@", System.Environment.NewLine);
+            return result;
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace PocketZone.Space
@@ -14,21 +15,15 @@ namespace PocketZone.Space
         public ProgressData ProgressData;
         private GameState gameState;
 
-        public event Action OnLevelComplete;
+        public UnityEvent OnDeathEventUI;
+        public UnityEvent OnLevelCompleteEventUI;
+
         public event Action<GameState> OnGameStateChanged;
 
         private void Awake()
         {
             instance = this;
             RefreshProgressData();
-            DontDestroyOnLoad(gameObject);
-            OnLevelComplete += HandleOnLevelComplete;
-            
-        }
-
-        private void OnDestroy()
-        {
-            OnLevelComplete -= HandleOnLevelComplete;
         }
 
         private void RefreshProgressData()
@@ -75,9 +70,11 @@ namespace PocketZone.Space
                     PauseTime();
                     break;
                 case GameState.PlayerDeadInGame:
+                    OnDeathEventUI?.Invoke();
                     break;
                 case GameState.LevelComplete:
-                    OnLevelComplete?.Invoke();
+                    HandleOnLevelComplete();
+                    OnLevelCompleteEventUI?.Invoke();
                     break;
                 default:
                     break;
@@ -132,6 +129,20 @@ namespace PocketZone.Space
         {
             ProgressData.levels[sceneIndex] = true;
             SaveSystem.SaveProgress(ProgressData);
+        }
+
+        public void TryGoToNextLevel()
+        {
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            int lastSceneIndex = SceneManager.sceneCountInBuildSettings - 1;
+            if (currentSceneIndex == lastSceneIndex)
+            {
+                GoToMainMenu();
+            }
+            else
+            {
+                LoadLevel(currentSceneIndex + 1);
+            }
         }
         #endregion
     }

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace PocketZone.Space
@@ -13,6 +14,9 @@ namespace PocketZone.Space
         [SerializeField] protected Transform healthBarParent;
         [SerializeField] protected Image healthBarFillImage;
         [SerializeField] protected Animator animator;
+
+        public UnityEvent OnTakeDamageUI;
+
         public bool IsAlive => isAlive;
         protected bool isAlive = true;
         public float CurrentHealth => currentHealth;
@@ -46,6 +50,7 @@ namespace PocketZone.Space
             {
                 return;
             }
+            OnTakeDamageUI?.Invoke();
             currentHealth = Mathf.Clamp(currentHealth - damage, 0f, maxHealth);
             HealthBarUpdate?.Invoke(currentHealth / maxHealth);
             if (currentHealth == 0)

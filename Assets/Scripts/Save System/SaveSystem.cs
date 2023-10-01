@@ -9,6 +9,7 @@ namespace PocketZone.Space
     public static class SaveSystem
     {
         const string saveFileName = "save.dat";
+        const string nonSerializedFileName = "save.txt";
         public static void SaveProgress(ProgressData progressData)
         {
             BinaryFormatter formatter = new BinaryFormatter();
@@ -18,6 +19,13 @@ namespace PocketZone.Space
             ProgressData _progressData = new ProgressData(progressData);
             formatter.Serialize(stream, _progressData);
             stream.Close();
+
+            string _NS_path = Application.persistentDataPath + "/" + nonSerializedFileName;
+            //FileStream _NS_stream = new FileStream(_NS_path, FileMode.Create);
+            StreamWriter streamWriter =  File.CreateText(_NS_path);
+            streamWriter.Write(_progressData);
+            streamWriter.Close();
+            //_NS_stream.Close();
         }
 
         public static ProgressData LoadProgressData()

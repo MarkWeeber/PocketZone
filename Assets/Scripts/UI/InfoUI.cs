@@ -25,6 +25,7 @@ namespace PocketZone.Space
         public const string ENEMIES_APPROACHING = "Враги приближаются";
         public const string PLAYER_DIED = "Вы погибли";
         public const string LEVEL_COMPLETE = "Уровень зачищен!";
+        public const string NOT_ALL_ENEMIES_SLAIN = "Не все враги убиты!";
 
         [Header("References")]
         [SerializeField] private Transform informationContainer;
