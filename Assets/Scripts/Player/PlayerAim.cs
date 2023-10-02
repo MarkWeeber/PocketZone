@@ -12,7 +12,6 @@ namespace PocketZone.Space
         [SerializeField] private Transform aimSpotParent;
         [SerializeField] private Transform aimSpot;
         [SerializeField] private Transform modelTransform;
-        [SerializeField] private PlayerHealth health;
         [SerializeField] private TriggerHandler triggerHandler;
         [Header("Settings")]
         [SerializeField] private float aimLerprate = 20f;
@@ -20,7 +19,7 @@ namespace PocketZone.Space
         private Vector2 aimDirection;
         private bool lookLeft;
         private float distance;
-        private bool isAlive = true;
+        private bool isActive = true;
         private bool targetOnSight;
         private List<EnemyHealth> enemiesHealthList;
         private EnemyHealth enemyHealth;
@@ -31,22 +30,22 @@ namespace PocketZone.Space
             enemiesHealthList = new List<EnemyHealth>();
             inputReader.MovementEvent += HandleMovement;
             distance = Vector2.Distance(aimSpot.position, aimSpotParent.position);
-            health.OnDeath += OnDeath;
             triggerHandler.OnTriggerEnter += HandleEnemySeen;
             triggerHandler.OnTriggerExit += HandleEnemyLost;
+            GameManager.Instance.OnGameStateChanged += HandleGameStateChanged;
         }
 
         private void OnDestroy()
         {
             inputReader.MovementEvent -= HandleMovement;
-            health.OnDeath -= OnDeath;
             triggerHandler.OnTriggerEnter -= HandleEnemySeen;
             triggerHandler.OnTriggerExit -= HandleEnemyLost;
+            GameManager.Instance.OnGameStateChanged -= HandleGameStateChanged;
         }
 
         private void Update()
         {
-            if (!isAlive)
+            if (!isActive)
             {
                 return;
             }
@@ -103,9 +102,12 @@ namespace PocketZone.Space
             }
         }
 
-        private void OnDeath()
+        private void HandleGameStateChanged(GameState state)
         {
-            isAlive = false;
+            if (state == GameState.LevelComplete || state == GameState.PlayerDeadInGame)
+            {
+                isActive = false;
+            }
         }
 
         private void HandleMovement(Vector2 moveDirection)

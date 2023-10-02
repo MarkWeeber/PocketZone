@@ -67,9 +67,9 @@ namespace PocketZone.Space
             if (state == GameState.LevelComplete || state == GameState.PlayerDeadInGame)
             {
                 rbody2D.velocity = Vector2.zero;
+                animator.SetFloat("MoveSpeed", animator.GetFloat("AnimationSpeedMultiplier") * rbody2D.velocity.magnitude);
                 isActive = false;
             }
         }
-
     }
 }

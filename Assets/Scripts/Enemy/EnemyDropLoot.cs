@@ -8,16 +8,8 @@ namespace PocketZone.Space
     public class EnemyDropLoot : MonoBehaviour
     {
         [SerializeField] private EnemyHealth health;
+        [SerializeField] private List<DropLootStatistics> DropLootStatistics;
         [SerializeField] private float dropRadius = 0.5f;
-        [SerializeField] private GameObject lootPrefab1;
-        [SerializeField] private int minDrop1 = 0;
-        [SerializeField] private int maxDrop1 = 2;
-        [SerializeField] private GameObject lootPrefab2;
-        [SerializeField] private int minDrop2 = 0;
-        [SerializeField] private int maxDrop2 = 2;
-        [SerializeField] private GameObject lootPrefab3;
-        [SerializeField] private int minDrop3 = 0;
-        [SerializeField] private int maxDrop3 = 2;
 
         private List<GameObject> lootList;
 
@@ -36,34 +28,22 @@ namespace PocketZone.Space
         private void calculateLootDropItems()
         {
             GameObject spawnedPrefab;
-            int firstLootQuantity = Random.Range(minDrop1, maxDrop1 + 1);
-            int secondLootQuantity = Random.Range(minDrop2, maxDrop2 + 1);
-            int thirdLootQuantity = Random.Range(minDrop3, maxDrop3 + 1);
-            if (lootPrefab1 != null)
+            int probability = 0;
+            int spawnQuantity = 0;
+            foreach (DropLootStatistics _drop in DropLootStatistics)
             {
-                for (int i = 0; i < firstLootQuantity; i++)
+                probability = Random.Range(-50, 51);
+                float lowRange = (_drop.probabilityPercent - 50) / 2f;
+                float maxRange = (50 - _drop.probabilityPercent) / 2f;
+                if (probability <= lowRange || probability >= maxRange)
                 {
-                    spawnedPrefab = Instantiate(lootPrefab1, transform);
-                    spawnedPrefab.SetActive(false);
-                    lootList.Add(spawnedPrefab);
-                }
-            }
-            if (lootPrefab2 != null)
-            {
-                for (int i = 0; i < secondLootQuantity; i++)
-                {
-                    spawnedPrefab = Instantiate(lootPrefab2, transform);
-                    spawnedPrefab.SetActive(false);
-                    lootList.Add(spawnedPrefab);
-                }
-            }
-            if (lootPrefab3 != null)
-            {
-                for (int i = 0; i < thirdLootQuantity; i++)
-                {
-                    spawnedPrefab = Instantiate(lootPrefab3, transform);
-                    spawnedPrefab.SetActive(false);
-                    lootList.Add(spawnedPrefab);
+                    spawnQuantity = Random.Range(_drop.minDropQuantity, _drop.maxDropQuantity + 1);
+                    for (int i = spawnQuantity; i > 0; i--)
+                    {
+                        spawnedPrefab = Instantiate(_drop.prefab);
+                        spawnedPrefab.SetActive(false);
+                        lootList.Add(spawnedPrefab);
+                    }
                 }
             }
         }
@@ -77,5 +57,14 @@ namespace PocketZone.Space
                 lootDrop.transform.position = (Vector2)transform.position + Random.insideUnitCircle.normalized * dropRadius;
             }
         }
+    }
+
+    [System.Serializable]
+    public struct DropLootStatistics
+    {
+        public int probabilityPercent;
+        public int minDropQuantity;
+        public int maxDropQuantity;
+        public GameObject prefab;
     }
 }

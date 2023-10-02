@@ -73,8 +73,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -866603177
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
   m_Color: {r: 1, g: 0.8116023, b: 0, a: 1}
@@ -126,8 +126,8 @@ TrailRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -866603177
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Time: 0.1
   m_Parameters:
@@ -236,5 +236,5 @@ MonoBehaviour:
     m_Bits: 128
   damageValue: 15
   damageRayDistance: 0.25
-  aliveTime: 5
+  aliveTime: 0.4
   targetTag: Enemy

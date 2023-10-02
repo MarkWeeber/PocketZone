@@ -14,6 +14,7 @@ namespace PocketZone.Space
         [SerializeField] private Animator animator;
         [SerializeField] private EnemyHealth health;
         [SerializeField] private Transform modelTransform;
+        [SerializeField] private EnemyGroupAlerter alerter;
         [Header("Settings")]
         [SerializeField] private float moveSpeed = 80f;
         [SerializeField] private float damageValue = 20f;
@@ -36,12 +37,20 @@ namespace PocketZone.Space
             health.OnDeath += OnDeath;
             meleeDamagerOffsetDistance = Vector2.Distance(meleeDamager.transform.position, transform.position);
             health.OnTakeDamage += HandleDamageTaken;
+            if (alerter != null)
+            {
+                alerter.OnAlert += Alerted;
+            }
         }
         private void OnDestroy()
         {
             triggerHandler.OnTriggerEnter -= OnTargetEnterSight;
             health.OnDeath -= OnDeath;
             health.OnTakeDamage -= HandleDamageTaken;
+            if (alerter != null)
+            {
+                alerter.OnAlert -= Alerted;
+            }
         }
 
         private void Update()
@@ -73,13 +82,29 @@ namespace PocketZone.Space
             if (_playerInventory != null)
             {
                 targetTransform = _playerInventory.transform;
+                TryAlertOthers(targetTransform);
                 targetFound = true;
+            }
+        }
+
+        private void Alerted(Transform target)
+        {
+            targetFound = true;
+            targetTransform = target;
+        }
+
+        private void TryAlertOthers(Transform target)
+        {
+            if (alerter != null)
+            {
+                alerter.Alert(target);
             }
         }
 
         private void OnTargetEnterSight(Collider2D targetCollider)
         {
             targetTransform = targetCollider.transform;
+            TryAlertOthers(targetTransform);
             targetFound = true;
         }
 

@@ -297,7 +297,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1750630347
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -9148595311541827109, guid: eb12f7bfac0d77046905ee79ff5c9e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -413,7 +413,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1750630347
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 8468823292800697166, guid: eb12f7bfac0d77046905ee79ff5c9e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -808,7 +808,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1750630347
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 5945939484006371963, guid: eb12f7bfac0d77046905ee79ff5c9e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -892,7 +892,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1750630347
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: -9148595311541827109, guid: eb12f7bfac0d77046905ee79ff5c9e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -950,16 +950,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: {fileID: 2098413331376408204}
-  dropRadius: 0.5
-  lootPrefab1: {fileID: 2299189345867675257, guid: 0e36b38a2235b0f40beb98b6922c5720, type: 3}
-  minDrop1: 1
-  maxDrop1: 5
-  lootPrefab2: {fileID: 4173278491775225026, guid: 0d2d2b6eccbb47d46a1a1cd9019c77c4, type: 3}
-  minDrop2: 1
-  maxDrop2: 5
-  lootPrefab3: {fileID: 2065933281395251473, guid: 709fc18d393dddf44b9a53478388a82d, type: 3}
-  minDrop3: 1
-  maxDrop3: 5
+  DropLootStatistics:
+  - probabilityPercent: 20
+    minDropQuantity: 1
+    maxDropQuantity: 2
+    prefab: {fileID: 2299189345867675257, guid: 0e36b38a2235b0f40beb98b6922c5720, type: 3}
+  - probabilityPercent: 5
+    minDropQuantity: 0
+    maxDropQuantity: 1
+    prefab: {fileID: 4173278491775225026, guid: 0d2d2b6eccbb47d46a1a1cd9019c77c4, type: 3}
+  - probabilityPercent: 5
+    minDropQuantity: 1
+    maxDropQuantity: 2
+    prefab: {fileID: 6352782062536346640, guid: 03a3710444604fa4eacfc6e28e604825, type: 3}
+  - probabilityPercent: 5
+    minDropQuantity: 1
+    maxDropQuantity: 2
+    prefab: {fileID: 4036669894543834180, guid: 4c41b6e2a43425b4193c4d65290e0be9, type: 3}
+  - probabilityPercent: 5
+    minDropQuantity: 1
+    maxDropQuantity: 2
+    prefab: {fileID: 8482464564035848874, guid: 23e6996ce99c5f54fa8399b587c6fafc, type: 3}
+  - probabilityPercent: 5
+    minDropQuantity: 1
+    maxDropQuantity: 2
+    prefab: {fileID: 2065933281395251473, guid: 709fc18d393dddf44b9a53478388a82d, type: 3}
+  dropRadius: 1
 --- !u!1 &6440714731148960509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1031,7 +1047,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1750630347
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: 8468823292800697166, guid: eb12f7bfac0d77046905ee79ff5c9e44, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1138,6 +1154,9 @@ MonoBehaviour:
   healthBarParent: {fileID: 4515484464770185706}
   healthBarFillImage: {fileID: 6355737924019668384}
   animator: {fileID: 5993514720674890908}
+  OnTakeDamageUI:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &3606296351081579493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1159,3 +1178,4 @@ MonoBehaviour:
   moveSpeed: 150
   damageValue: 15
   reachDistance: 1
+  attackDuration: 1

@@ -927,10 +927,10 @@ TextureImporter:
       name: Flag_39
       rect:
         serializedVersion: 2
-        x: 93
+        x: 97
         y: 226
-        width: 67
-        height: 94
+        width: 63
+        height: 62
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
