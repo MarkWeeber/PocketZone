@@ -21,11 +21,9 @@ namespace PocketZone.Space
             stream.Close();
 
             string _NS_path = Application.persistentDataPath + "/" + nonSerializedFileName;
-            //FileStream _NS_stream = new FileStream(_NS_path, FileMode.Create);
             StreamWriter streamWriter =  File.CreateText(_NS_path);
             streamWriter.Write(_progressData);
             streamWriter.Close();
-            //_NS_stream.Close();
         }
 
         public static ProgressData LoadProgressData()

@@ -6,6 +6,7 @@ namespace PocketZone.Space
 {
     public interface ICollectible
     {
+        public int ItemId { get; }
         public int MaxStack { get; }
         public int Quantity { get; set; }
         public Sprite Sprite { get; }

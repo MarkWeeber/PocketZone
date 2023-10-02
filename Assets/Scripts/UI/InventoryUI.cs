@@ -2,30 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace PocketZone.Space
 {
     public class InventoryUI : MonoBehaviour
     {
-        private const int maxSlots = 9;
+        public const int maxSlots = 9;
         [SerializeField] private GameObject inventoryPrefab;
         [SerializeField] private Transform inventoryPanel;
         [SerializeField] private Transform inventoryContainer;
         [SerializeField] private InputReader inputReader;
+        [SerializeField] private List<ItemIdPrefab> itemIdPrefabStruct;
         private List<InventoryItemStack> inventoryStacks;
+        private ProgressData progressData;
+
+        public InventorySaveData InventorySaveData => ReturnInventorySaveData();
 
         private void Start()
         {
+            progressData = GameManager.Instance.ProgressData;
             inventoryStacks = new List<InventoryItemStack>();
-            
-            for (int i = 0; i < maxSlots; i++)
-            {
-                InventoryItemStack stack = new InventoryItemStack();
-                stack.StackRenewed += OnStackRenewed;
-                stack.StackDepleted += OnStackDepleted;
-                inventoryStacks.Add(stack);
-            }
             ClearAllItemsInInventoryUI();
+            CreateInventoryItems();
             inputReader.InventoryOpenEvent += ToggleShowInventoryPanel;
         }
 
@@ -35,6 +34,56 @@ namespace PocketZone.Space
             foreach (InventoryItemStack _stack in inventoryStacks)
             {
                 _stack.ClearHandlers();
+            }
+        }
+
+        private void CreateInventoryItems()
+        {
+            int _currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            for (int i = 0; i < maxSlots; i++)
+            {
+                InventoryItemStack _stack = new InventoryItemStack();
+                _stack.StackRenewed += OnStackRenewed;
+                _stack.StackDepleted += OnStackDepleted;
+                inventoryStacks.Add(_stack);
+                InventorySaveData _inventorySaveData = progressData.InventorySaveData[_currentSceneIndex];
+                int _itemId = _inventorySaveData.IdAndQuantity[i, 0];
+                if(_itemId == 0)
+                {
+                    continue;
+                }
+                int quantity = _inventorySaveData.IdAndQuantity[i, 1];
+                GameObject _spawnedGameObject = Instantiate(itemIdPrefabStruct.First(x => x.ItemId == _itemId).Prefab);
+                ICollectible _collectible = _spawnedGameObject.GetComponent<ICollectible>();
+                _collectible.Quantity = Mathf.Clamp(quantity, 1, _collectible.MaxStack);
+                _stack.TryAddToStack(_collectible);
+            }
+        }
+
+        private InventorySaveData ReturnInventorySaveData()
+        {
+            InventorySaveData _result = new InventorySaveData(maxSlots);
+            for (int i = 0; i < maxSlots; i++)
+            {
+                int _stackQuantity = inventoryStacks[i].CurrentStack;
+                if(_stackQuantity == 0)
+                {
+                    continue;
+                }
+                _result.IdAndQuantity[i, 0] = inventoryStacks[i].Collectible.ItemId;
+                _result.IdAndQuantity[i, 1] = _stackQuantity;
+            }
+            return _result;
+        }
+
+        private void CreateEmptyInventory()
+        {
+            for (int i = 0; i < maxSlots; i++)
+            {
+                InventoryItemStack stack = new InventoryItemStack();
+                stack.StackRenewed += OnStackRenewed;
+                stack.StackDepleted += OnStackDepleted;
+                inventoryStacks.Add(stack);
             }
         }
 
@@ -146,5 +195,12 @@ namespace PocketZone.Space
                 _inventoryItem.image.sprite = stack.Collectible.Sprite;
             }
         }
+    }
+
+    [System.Serializable]
+    public struct ItemIdPrefab
+    {
+        public int ItemId;
+        public GameObject Prefab;
     }
 }

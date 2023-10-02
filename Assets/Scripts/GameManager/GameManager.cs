@@ -53,8 +53,9 @@ namespace PocketZone.Space
         private void HandleOnLevelComplete()
         {
             int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-            int nextLevel = (currentSceneIndex == SceneManager.sceneCountInBuildSettings) ? currentSceneIndex : currentSceneIndex + 1;
-            ProgressData = new ProgressData(SceneManager.sceneCountInBuildSettings, nextLevel);
+            int nextLevel = (currentSceneIndex == SceneManager.sceneCountInBuildSettings - 1) ? currentSceneIndex : currentSceneIndex + 1;
+            ProgressData.levels[nextLevel] = true;// = new ProgressData(SceneManager.sceneCountInBuildSettings, nextLevel);
+            ProgressData.InventorySaveData[nextLevel] = LevelUIManager.Instance.InventoryUI.InventorySaveData;
             SaveSystem.SaveProgress(ProgressData);
         }
 

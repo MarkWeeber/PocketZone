@@ -9,6 +9,8 @@ namespace PocketZone.Space
         private const int maxStack = 5;
         [SerializeField] private SpriteRenderer spriteRenderer;
         [SerializeField] private int quantity = 30;
+        private int itemId = 2;
+        public int ItemId => itemId;
         public int MaxStack => maxStack;
         public Sprite Sprite => spriteRenderer.sprite;
         public int Quantity { get => quantity; set => quantity = value; }
