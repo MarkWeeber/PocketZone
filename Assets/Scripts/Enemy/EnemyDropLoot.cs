@@ -40,7 +40,7 @@ namespace PocketZone.Space
                     spawnQuantity = Random.Range(_drop.minDropQuantity, _drop.maxDropQuantity + 1);
                     for (int i = spawnQuantity; i > 0; i--)
                     {
-                        spawnedPrefab = Instantiate(_drop.prefab);
+                        spawnedPrefab = Instantiate(_drop.prefab, transform);
                         spawnedPrefab.SetActive(false);
                         lootList.Add(spawnedPrefab);
                     }
